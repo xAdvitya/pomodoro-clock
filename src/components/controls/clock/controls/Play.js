@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-function Play() {
-    return (
-        <div id="play" style={lengthStyle}>
-            <div id="paly-pause">play</div>
-            <div id="reset">rest</div>
-        </div>
-    )
+export class Play extends Component {
+    render() {
+        return (
+            < div id="play" style={lengthStyle} >
+                <div id="paly-pause" onClick={this.props.play}>play</div>
+                <div id="reset" onClick={this.props.reset}>rest</div>
+            </div >
+        )
+    }
 }
+
 
 const lengthStyle = {
     width: "200px",
-    marginTop:"-6   00px",
+    marginLeft:"10px",
 }
 
 export default Play
+
+
+
+
+
+
