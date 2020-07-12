@@ -35,8 +35,23 @@
 
 #container{
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+ 
 }
 
+#tree{
+  float: right;
+  height: 700px;
+  width: 700px;
+}
+#image-box{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+#play{
+  margin-top: 140px;
+}
