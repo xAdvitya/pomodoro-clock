@@ -13,9 +13,9 @@ export class Clock extends Component {
 
     state = {
         second : 0,
-        minute : 1,
-        breakLength : 1,
-        sessionLength : 1,
+        minute : 5,
+        breakLength : 5,
+        sessionLength : 5,
         paused : false,
         session : true,
         wasPaused : false,
@@ -26,22 +26,22 @@ export class Clock extends Component {
 
         if (!this.state.paused) {
             if (id === "break-label") {
-            if (this.state.breakLength < 3) {
-            this.setState({ breakLength: this.state.breakLength + 1});
+            if (this.state.breakLength < 60) {
+            this.setState({ breakLength: this.state.breakLength + 5});
             if(!this.state.session){
-                this.setState({minute: this.state.minute + 1 });
-                min = min + 1;
+                this.setState({minute: this.state.minute + 5 });
+                min = min + 5;
                 console.log("min  "+min);
         }
                
     }}
         else if (id === "session-label") {
             console.log("counters")
-            if (this.state.sessionLength < 3) {
-                this.setState({ sessionLength: this.state.sessionLength + 1});
+            if (this.state.sessionLength < 60) {
+                this.setState({ sessionLength: this.state.sessionLength + 5});
                 if (this.state.session) { 
-            this.setState({minute: this.state.minute + 1});
-            min = min+1;
+            this.setState({minute: this.state.minute + 5});
+            min = min+5;
             }
         }
         }   
@@ -51,20 +51,20 @@ export class Clock extends Component {
     decreaseTime = (id) => {
         if (!this.state.paused) {
             if (id === "break-label") {
-            if (this.state.breakLength > 1) {
-            this.setState({ breakLength: this.state.breakLength - 1});
+            if (this.state.breakLength > 5) {
+            this.setState({ breakLength: this.state.breakLength - 5});
                 if (!this.state.session) {
-                    this.setState({ minute: this.state.minute - 1 });
-                    min = min - 1;
+                    this.setState({ minute: this.state.minute - 5 });
+                    min = min - 5;
                 }
                 
         }}
         else if (id === "session-label") {
-            if(this.state.sessionLength>1){
-                this.setState({ sessionLength: this.state.sessionLength - 1 });
+            if(this.state.sessionLength>5){
+                this.setState({ sessionLength: this.state.sessionLength - 5 });
                 if (this.state.session) {
-                this.setState({minute: this.state.minute - 1});
-            min = min - 1;
+                this.setState({minute: this.state.minute - 5});
+            min = min - 5;
                 }
             }
         }
@@ -147,7 +147,7 @@ export class Clock extends Component {
 
     resetTime = () =>{
         clearInterval(interval);
-        this.setState({ breakLength: 1, sessionLength: 1, second: 0, minute: 1, paused:false,wasPaused:false,session:true});
+        this.setState({ breakLength: 5, sessionLength: 5, second: 0, minute: 5, paused:false,wasPaused:false,session:true});
         min=0;
         sec=0;
     }
