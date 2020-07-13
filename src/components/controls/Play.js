@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import "./play.css"
+import "./controls.css"
 
 
 let button = <i className="fa fa-play" ></i>;

@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif&display=swap');
-
 #play{
     width : 200px;
-    margin-left: 10px;
+    margin-left: -5px;
+    margin-top: 220px;
 }
 
 #paly-pause{
@@ -11,19 +10,9 @@
 
 .fa{
     font-size: 30px;
+    color: #f9f871;
 }
 
-.fa-pause{
-    color: blueviolet;
-}
-
-.fa-play{
-    color: red;
-}
-
-.fa-refresh{
-    color: red;
-}
 
 #length-box{
     margin-top: 80px;
@@ -33,19 +22,18 @@
     text-align: center;
 }
 .label{
-    font-family: 'IBM Plex Serif', serif;
     text-align: center;
     font-size: 25px;
     margin-top: 10px;
 }
 
 #break-label{
-    background-color: red;
+    background-color: #ff397b;
     border-radius: 10px;
 }
 
 #session-label{
-    background-color: red;
+    background-color: #ff397b;
     border-radius: 10px;
 }
 

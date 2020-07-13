@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import "./clock.css"
-import Play from './controls/Play';
-import Length from './controls/Length';
-import Image from "./Image"
-import Header from './Header';
+import Header from '../header/Header';
+import Length from '../controls/Length';
+import Image from '../image/Image';
+import Play from '../controls/Play';
 
 let interval =0;
 let min,sec;
@@ -27,32 +27,45 @@ export class Clock extends Component {
         if (!this.state.paused) {
             if (id === "break-label") {
             if (this.state.breakLength < 3) {
-        
-            this.setState({ breakLength: this.state.breakLength + 1, minute: this.state.minute + 1});
-            min = min + 1;
+            this.setState({ breakLength: this.state.breakLength + 1});
+            if(!this.state.session){
+                this.setState({minute: this.state.minute + 1 });
+                min = min + 1;
+                console.log("min  "+min);
+        }
+               
     }}
         else if (id === "session-label") {
             console.log("counters")
             if (this.state.sessionLength < 3) {
-            this.setState({ sessionLength: this.state.sessionLength + 1, minute: this.state.minute + 1});
+                this.setState({ sessionLength: this.state.sessionLength + 1});
+                if (this.state.session) { 
+            this.setState({minute: this.state.minute + 1});
             min = min+1;
             }
+        }
         }   
-    }
-        
+    }     
     }
 
     decreaseTime = (id) => {
         if (!this.state.paused) {
             if (id === "break-label") {
             if (this.state.breakLength > 1) {
-            this.setState({ breakLength: this.state.breakLength - 1, minute: this.state.minute - 1});
-            min = min - 1;
+            this.setState({ breakLength: this.state.breakLength - 1});
+                if (!this.state.session) {
+                    this.setState({ minute: this.state.minute - 1 });
+                    min = min - 1;
+                }
+                
         }}
         else if (id === "session-label") {
             if(this.state.sessionLength>1){
-                this.setState({ sessionLength: this.state.sessionLength - 1, minute: this.state.minute - 1});
+                this.setState({ sessionLength: this.state.sessionLength - 1 });
+                if (this.state.session) {
+                this.setState({minute: this.state.minute - 1});
             min = min - 1;
+                }
             }
         }
     }
@@ -115,7 +128,7 @@ export class Clock extends Component {
     }
 
     startBreak = () => {
-///////////////////////////////
+        
         clearInterval(interval);
         if(this.state.wasPaused){
             this.setState({minute:min , second : sec});
@@ -182,21 +195,20 @@ export class Clock extends Component {
             <div >
                 <div id="image-box">
                 <div id="container">
-                        <Header />
+                        <Header/>
                 <div id="circle" className="out">
                     <div className="in-1">
                         <div className="in-2">
                             <div id="timer">
-                            {this.state.minute} : {this.state.second}
+                            {this.state.minute < 10 ? "0" + this.state.minute : this.state.minute} : {this.state.second < 10 ? "0" + this.state.second : this.state.second}
                             </div>
                         </div>
                     </div>
                     </div>
                         <Length decrement={this.decreaseTime} increment={this.increaseTime} breakL={this.state.breakLength} sessionL={this.state.sessionLength}/>
-                        
                 </div>
                     <Play play={this.playPause} tooglePaused={this.tooglePaused}reset={this.resetTime}/>
-                <Image />
+                    <Image session={this.state.session}/>
                 </div>
                 
                 

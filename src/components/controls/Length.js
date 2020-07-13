@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import "./play.css"
+import "./controls.css"
 export class Length extends Component {
     render() {
         return (
