@@ -11,7 +11,5 @@ export class App extends Component {
     </div>;
   }
 }
-const lengthStyle = {
 
-}
 export default App;

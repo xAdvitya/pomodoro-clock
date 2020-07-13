@@ -4,7 +4,7 @@ export class Play extends Component {
     render() {
         return (
             < div id="play" style={lengthStyle} >
-                <div id="paly-pause" onClick={this.props.play}>play</div>
+                <div id="paly-pause" onClick={() => { this.props.play();this.props.tooglePaused()}}>play</div>
                 <div id="reset" onClick={this.props.reset}>rest</div>
             </div >
         )

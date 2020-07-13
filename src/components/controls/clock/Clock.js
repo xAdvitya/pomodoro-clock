@@ -4,35 +4,38 @@ import Play from './controls/Play';
 import Length from './controls/Length';
 import Image from "./Image"
 
-let interval = 0;
-let start,remaining;
-let timer = true;
+let interval =0;
+let min,sec;
+const url = "https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav";
+const audio = new Audio(url);
 export class Clock extends Component {
 
     state = {
         second : 0,
         minute : 1,
-        startStop : true,
         breakLength : 1,
         sessionLength : 1,
+        paused : false,
+        session : true,
+        wasPaused : false,
     }
     
     increaseTime = (id) =>{
-        console.log(id)
-        if (this.state.startStop) {
+
+        if (!this.state.paused) {
         if (id === "break-label"){
         this.setState({breakLength: this.state.breakLength + 1});
     }
         else if (id === "session-label") {
             console.log("counters")
-            this.setState({ sessionLength: this.state.sessionLength + 5, minute: this.state.minute + 5});
+            this.setState({ sessionLength: this.state.sessionLength + 1, minute: this.state.minute + 1});
         }   
     }
+        
     }
 
     decreaseTime = (id) => {
-        console.log(id)
-        if (this.state.startStop) {
+        if (!this.state.paused) {
         if (id === "break-label") {
             this.setState({ breakLength: this.state.breakLength - 5 });
         }
@@ -44,10 +47,12 @@ export class Clock extends Component {
 
     counterSess = () =>{
         console.log("counter")
-        this.setState({second: this.state.second - 1 });
+        this.setState({ second: this.state.second - 1 });
         if (this.state.minute === 0 && this.state.second < 0) {
+            console.log("/////////////////Audio/////////////////")
             this.auido();
-            this.startBreak();
+            this.setState({ session: false});
+            this.timeController();
         }
         else if(this.state.second <0){
             console.log("into if")
@@ -57,12 +62,15 @@ export class Clock extends Component {
     }
 
     counterbreak = () => {
-        console.log("counter")
+        console.log("counter brk");
         this.setState({second: this.state.second - 1 })
 
         if (this.state.minute === 0 && this.state.second < 0) {
+            console.log("counter brk if     ");
+            console.log("/////////////////Audio/////////////////")
             this.auido();
-            this.startSess();
+            this.setState({ session: true});
+            this.timeController();
         }
         else if (this.state.second < 0) {
             console.log("into if")
@@ -71,37 +79,89 @@ export class Clock extends Component {
     }
 
     startSess = () => {
-        if (this.state.startStop){
-            clearInterval(interval);
-            this.setState({ minute: this.state.sessionLength, second: 0});
-            console.log("start session");
-           interval = setInterval(this.counterSess,1000);
+
+        clearInterval(interval);
+        console.log(this.state.wasPaused + "was paused");
+        if (this.state.wasPaused) {
+            console.log("yessssssssssssss")
+            this.setState({ minute: min, second: sec });
+            this.setState({ wasPaused:false });
         }
+        else {
+            this.setState({ minute: this.state.sessionLength, second: 0 });
+        }
+        interval = setInterval(this.counterSess, 1000);
     }
 
-    startBreak = () =>{
-        console.log("start break");
-        clearInterval(interval);
-        this.setState({ minute : this.state.breakLength , second:0});
-        interval = setInterval(this.counterbreak, 1000);
+    pausedValue =()=>{
+        console.log("hi")
+        const min = this.state.minute;
+        const sec = this.state.second;
+        this.reset();
+        this.setState({ minute: min, second: sec, paused: true });
+    }
 
+    startBreak = () => {
+///////////////////////////////
+        clearInterval(interval);
+        if(this.state.wasPaused){
+            this.setState({minute:min , second : sec});
+            this.setState({ wasPaused: false });
+        }
+        else{
+            this.setState({ minute: this.state.breakLength, second: 0 });
+        }
+        interval = setInterval(this.counterbreak, 1000);
     }
 
     reset = () => {
         console.log("stop")
         clearInterval(interval);
-        this.setState({ startStop: true });
-        this.resetTime();
     }
 
     resetTime = () =>{
+        clearInterval(interval);
         this.setState({ breakLength: 1, sessionLength: 1, second: 0, minute: 1 });
     }
 
     auido = ()=>{
-        const url = "https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav";
-        Audio(url).play();
+        audio.play();
     }
+
+    timeController = () =>{
+
+        if(this.state.session){
+            console.log("timeController ses");
+            this.startSess();
+        }
+        else{
+            console.log("timeController brk");
+            this.startBreak();
+        }
+    }
+
+    saveValue(){
+        min = this.state.minute;
+        sec = this.state.second;
+        this.setState({wasPaused : true});
+        clearInterval(interval);
+    }
+
+    tooglePaused = () =>{
+        this.setState({paused : !this.state.paused});
+    }
+
+    playPause = () =>{
+        if(this.state.paused === false){
+            console.log("time ctrl");
+            this.timeController();
+        }
+        else{
+            console.log("save ctrl");
+            this.saveValue();
+        }
+    }
+
     render() {
         return (
             <div >
@@ -118,7 +178,7 @@ export class Clock extends Component {
                     </div>
                         <Length decrement={this.decreaseTime} increment={this.increaseTime} breakL={this.state.breakLength} sessionL={this.state.sessionLength}/>
                 </div>
-                    <Play play={this.startSess} reset={this.reset}/>
+                    <Play play={this.playPause} tooglePaused={this.tooglePaused}reset={this.reset}/>
                 <Image />
                 </div>
                 
@@ -127,7 +187,4 @@ export class Clock extends Component {
     }
 }
 
-const lengthStyle = {
- 
-}
 export default Clock
