@@ -27,21 +27,19 @@ export class Clock extends Component {
         if (!this.state.paused) {
             if (id === "break-label") {
             if (this.state.breakLength < 60) {
-            this.setState({ breakLength: this.state.breakLength + 5});
+            this.setState({ breakLength: this.state.breakLength + 1});
             if(!this.state.session){
-                this.setState({minute: this.state.minute + 5 });
-                min = min + 5;
-                console.log("min  "+min);
+                this.setState({minute: this.state.minute + 1 });
+                min = min + 1;
         }
                
     }}
         else if (id === "session-label") {
-            console.log("counters")
             if (this.state.sessionLength < 60) {
-                this.setState({ sessionLength: this.state.sessionLength + 5});
+                this.setState({ sessionLength: this.state.sessionLength + 1});
                 if (this.state.session) { 
-            this.setState({minute: this.state.minute + 5});
-            min = min+5;
+            this.setState({minute: this.state.minute + 1});
+            min = min+1;
             }
         }
         }   
@@ -52,18 +50,18 @@ export class Clock extends Component {
         if (!this.state.paused) {
             if (id === "break-label") {
             if (this.state.breakLength > 5) {
-            this.setState({ breakLength: this.state.breakLength - 5});
+            this.setState({ breakLength: this.state.breakLength - 1});
                 if (!this.state.session) {
-                    this.setState({ minute: this.state.minute - 5 });
-                    min = min - 5;
+                    this.setState({ minute: this.state.minute - 1 });
+                    min = min - 1;
                 }
-                
-        }}
+                }
+            }
         else if (id === "session-label") {
             if(this.state.sessionLength>5){
-                this.setState({ sessionLength: this.state.sessionLength - 5 });
+                this.setState({ sessionLength: this.state.sessionLength - 1 });
                 if (this.state.session) {
-                this.setState({minute: this.state.minute - 5});
+                this.setState({minute: this.state.minute - 1});
             min = min - 5;
                 }
             }
@@ -72,34 +70,26 @@ export class Clock extends Component {
     }
 
     counterSess = () =>{
-        console.log("counter")
         this.setState({ second: this.state.second - 1 });
         if (this.state.minute === 0 && this.state.second < 0) {
-            console.log("/////////////////Audio/////////////////")
             this.auido();
             this.setState({ session: false});
             this.timeController();
         }
         else if(this.state.second <0){
-            console.log("into if")
             this.setState({minute: this.state.minute-1 ,second:59});
         }
-
     }
 
     counterbreak = () => {
-        console.log("counter brk");
         this.setState({second: this.state.second - 1 })
 
         if (this.state.minute === 0 && this.state.second < 0) {
-            console.log("counter brk if     ");
-            console.log("/////////////////Audio/////////////////")
             this.auido();
             this.setState({ session: true});
             this.timeController();
         }
         else if (this.state.second < 0) {
-            console.log("into if")
             this.setState({ minute: this.state.minute - 1, second: 59 });
         }
     }
@@ -107,9 +97,7 @@ export class Clock extends Component {
     startSess = () => {
 
         clearInterval(interval);
-        console.log(this.state.wasPaused + "was paused");
         if (this.state.wasPaused) {
-            console.log("yessssssssssssss")
             this.setState({ minute: min, second: sec });
             this.setState({ wasPaused:false });
         }
@@ -119,13 +107,6 @@ export class Clock extends Component {
         interval = setInterval(this.counterSess, 1000);
     }
 
-    pausedValue =()=>{
-        console.log("hi")
-        const min = this.state.minute;
-        const sec = this.state.second;
-        this.reset();
-        this.setState({ minute: min, second: sec, paused: true });
-    }
 
     startBreak = () => {
         
@@ -141,7 +122,6 @@ export class Clock extends Component {
     }
 
     reset = () => {
-        console.log("stop")
         clearInterval(interval);
     }
 
@@ -159,11 +139,9 @@ export class Clock extends Component {
     timeController = () =>{
 
         if(this.state.session){
-            console.log("timeController ses");
             this.startSess();
         }
         else{
-            console.log("timeController brk");
             this.startBreak();
         }
     }
@@ -181,39 +159,50 @@ export class Clock extends Component {
 
     playPause = () =>{
         if(this.state.paused === false){
-            console.log("time ctrl");
             this.timeController();
         }
         else{
-            console.log("save ctrl");
             this.saveValue();
         }
     }
 
     render() {
         return (
-            <div >
-                <div id="image-box">
-                <div id="container">
-                        <Header/>
+          <div>
+            <div id="image-box">
+              <div id="container">
+                <Header />
                 <div id="circle" className="out">
-                    <div className="in-1">
-                        <div className="in-2">
-                            <div id="timer">
-                            {this.state.minute < 10 ? "0" + this.state.minute : this.state.minute} : {this.state.second < 10 ? "0" + this.state.second : this.state.second}
-                            </div>
-                        </div>
+                  <div className="in-1">
+                    <div className="in-2">
+                      <div id="time-left">
+                        {this.state.minute < 10
+                          ? "0" + this.state.minute
+                          : this.state.minute}{" "}
+                        :{" "}
+                        {this.state.second < 10
+                          ? "0" + this.state.second
+                          : this.state.second}
+                      </div>
                     </div>
-                    </div>
-                        <Length decrement={this.decreaseTime} increment={this.increaseTime} breakL={this.state.breakLength} sessionL={this.state.sessionLength}/>
+                  </div>
                 </div>
-                    <Play play={this.playPause} tooglePaused={this.tooglePaused}reset={this.resetTime}/>
-                    <Image session={this.state.session}/>
-                </div>
-                
-                
+                <Length
+                  decrement={this.decreaseTime}
+                  increment={this.increaseTime}
+                  breakL={this.state.breakLength}
+                  sessionL={this.state.sessionLength}
+                />
+              </div>
+              <Play
+                play={this.playPause}
+                tooglePaused={this.tooglePaused}
+                reset={this.resetTime}
+              />
+              <Image session={this.state.session} />
             </div>
-        )
+          </div>
+        );
     }
 }
 
