@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-
+import "./play.css"
 export class Length extends Component {
     render() {
         return (
-            < div style={lengthStyle} >
-                <div className="length-control" >
-                    <div id="break-label"> break-length</div>
-                    <i onClick={() => this.props.increment(breakL)}>up</i> {this.props.breakL} <i onClick={() => this.props.decrement(breakL)}>down</i>
+            < div id="length-box">
+                <div className="label length-control" >
+                    <div id="break-label">Break length</div>
+                    <i className="fa fa-arrow-up" onClick={() => this.props.increment(breakL)}></i> {this.props.breakL} {" "}
+                    <i className="fa fa-arrow-down" onClick={() => this.props.decrement(breakL)}></i>
                 </div>
-                <div className="length-control">
-                    <div id="session-label"> session-length</div>
-                    <i onClick={() => this.props.increment(sessionL)}> up</i>  {this.props.sessionL}  <i onClick={() =>this.props.decrement(sessionL)}>down</i>
+                <div className="label length-control">
+                    <div id="session-label">Session length</div>
+        <i className="fa fa-arrow-up" onClick={() => this.props.increment(sessionL)}></i>{"   "}{this.props.sessionL} {" "}
+                    <i className="fa fa-arrow-down" onClick={() =>this.props.decrement(sessionL)}></i>
                 </div>
             </div >
         )
@@ -20,8 +22,5 @@ export class Length extends Component {
 const breakL = "break-label";
 const sessionL = "session-label";
 
-const lengthStyle = {
-    marginTop: "50px"
-}
 
 export default Length

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Clock from "./components/controls/clock/Clock";
+import Header from "./components/controls/clock/Header";
 
 export class App extends Component {
   render() {
