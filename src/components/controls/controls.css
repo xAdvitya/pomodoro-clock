@@ -40,7 +40,7 @@ i {
   margin: 10px 20px 10px 20px;
 }
 
-@media only screen and (max-width: 380px) {
+@media only screen and (max-width: 400px) {
   #break-label {
     margin-top: -30px;
   }
