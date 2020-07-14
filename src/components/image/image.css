@@ -10,3 +10,13 @@ img{
   text-align: center;
   font-size: 50px;
 }
+
+@media only screen and (max-width: 380px) {
+
+img{
+  display: none;
+}
+#image-text{
+  display: none;
+}
+}

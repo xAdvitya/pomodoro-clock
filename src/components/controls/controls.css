@@ -39,3 +39,19 @@
 i {
   margin: 10px 20px 10px 20px;
 }
+
+@media only screen and (max-width: 380px) {
+  #break-label {
+    margin-top: -30px;
+  }
+
+  #session-label {
+    margin-top: 10px;
+  }
+
+  #play {
+    width: 100px;
+    margin-left: -25px;
+    margin-top: 240px;
+  }
+}

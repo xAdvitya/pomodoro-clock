@@ -13,9 +13,9 @@ export class Clock extends Component {
 
     state = {
         second : 0,
-        minute : 5,
+        minute : 25,
         breakLength : 5,
-        sessionLength : 5,
+        sessionLength : 25,
         paused : false,
         session : true,
         wasPaused : false,
@@ -62,7 +62,7 @@ export class Clock extends Component {
                 this.setState({ sessionLength: this.state.sessionLength - 1 });
                 if (this.state.session) {
                 this.setState({minute: this.state.minute - 1});
-            min = min - 5;
+            min = min - 1;
                 }
             }
         }
@@ -127,7 +127,7 @@ export class Clock extends Component {
 
     resetTime = () =>{
         clearInterval(interval);
-        this.setState({ breakLength: 5, sessionLength: 5, second: 0, minute: 5, paused:false,wasPaused:false,session:true});
+        this.setState({ breakLength: 5, sessionLength: 25, second: 0, minute: 25, paused:false,wasPaused:false,session:true});
         min=0;
         sec=0;
     }
