@@ -11,6 +11,7 @@
 .fa {
   font-size: 30px;
   color: #f9f871;
+  cursor: pointer;
 }
 
 #length-box {
